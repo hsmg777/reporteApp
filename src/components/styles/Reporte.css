@@ -1,0 +1,152 @@
+/* Estilo principal de la página del reporte */
+.main-Reporte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centra los elementos verticalmente */
+    width: 100%;
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Encabezado principal */
+.head-Reporte {
+    color: black;
+    font-size: 5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Contenedor principal del cuerpo */
+.body-reporte {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px; /* Espacio entre las secciones de órdenes y gastos */
+    width: 90%;
+    max-width: 1200px; /* Limita el ancho máximo */
+}
+
+/* Sección de órdenes */
+.ordenes-reporte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.ordenes-reporte h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.ordenes-reporte p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.ordenes-reporte input {
+    width: 90%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Sección de gastos */
+.gastos-reporte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.gastos-reporte h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.gastos-reporte p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.gastos-reporte input {
+    width: 90%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.boton-reporte {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-reporte:hover {
+    background-color: #0056b3;
+}
+
+/* --------- Media Queries --------- */
+
+/* Para pantallas medianas (tabletas, menos de 1024px) */
+@media (max-width: 1024px) {
+    .body-reporte {
+        flex-direction: column; /* Cambia las secciones a columna */
+        gap: 20px; /* Reduce el espacio entre secciones */
+    }
+
+    .ordenes-reporte, .gastos-reporte {
+        max-width: 90%; /* Ocupa casi todo el ancho disponible */
+    }
+}
+
+/* Para pantallas pequeñas (móviles, menos de 768px) */
+@media (max-width: 768px) {
+    .head-Reporte {
+        font-size: 3rem; /* Reduce el tamaño del encabezado */
+    }
+
+    .ordenes-reporte h2, .gastos-reporte h2 {
+        font-size: 1.5rem; /* Reduce el tamaño de los títulos */
+    }
+
+    .ordenes-reporte input, .gastos-reporte input {
+        font-size: 0.9rem; /* Ajusta el tamaño de los inputs */
+        padding: 8px; /* Reduce el padding de los inputs */
+    }
+    .boton-reporte {
+        padding: 8px 16px; /* Reduce el tamaño del botón */
+        font-size: 0.9rem;
+    }
+}

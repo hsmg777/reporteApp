@@ -1,0 +1,157 @@
+/* Estilo general para la página principal */
+.mainPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    padding: 10px; /* Añade un poco de espacio interno */
+}
+
+/* Encabezado principal */
+.head-Main {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.head-Main h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.head-Main h2 {
+    font-size: 1.5rem;
+    color: #555;
+}
+
+/* Contenedor del cuerpo principal */
+.body-Main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Sección de selección de reporte */
+.seleccionar-reporte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.seleccionar-reporte h3 {
+    font-size: 1.2rem;
+    color: #000000;
+}
+
+.combobox-reporte {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+
+/* Sección para crear reporte */
+.crear-reporte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crear-reporte h3 {
+    font-size: 1.2rem;
+    color: black;
+}
+
+/* Input de texto */
+.crear-reporte input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Botón de crear */
+.boton-crear {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-crear:hover {
+    background-color: #0056b3;
+}
+
+/* --------- Media Queries --------- */
+
+/* Para pantallas pequeñas (móviles, menos de 768px) */
+@media (max-width: 768px) {
+    .body-Main {
+        flex-direction: column; /* Cambia de fila a columna */
+        align-items: center;
+    }
+
+    .seleccionar-reporte, .crear-reporte {
+        width: 90%; /* Ocupa casi todo el ancho de la pantalla */
+        max-width: 400px;
+    }
+
+    .combobox-reporte, .crear-reporte input {
+        width: 100%; /* Asegura que el input ocupe todo el ancho disponible */
+    }
+}
+
+/* Para pantallas muy pequeñas (celulares, menos de 576px) */
+@media (max-width: 576px) {
+    .head-Main h1 {
+        font-size: 2rem; /* Reduce el tamaño del encabezado */
+    }
+
+    .head-Main h2 {
+        font-size: 1.2rem; /* Reduce el tamaño del subtítulo */
+    }
+
+    .seleccionar-reporte, .crear-reporte {
+        width: 100%; /* Usa todo el ancho disponible */
+        padding: 15px; /* Reduce el padding interno */
+        gap: 5px; /* Reduce los espacios entre elementos */
+    }
+
+    .combobox-reporte, .crear-reporte input {
+        font-size: 0.9rem; /* Reduce el tamaño de la fuente */
+        padding: 8px; /* Ajusta el padding para inputs */
+    }
+
+    .boton-crear {
+        padding: 8px 16px; /* Reduce el tamaño del botón */
+        font-size: 0.9rem;
+    }
+}
