@@ -20,13 +20,11 @@ const Reporte = () => {
         }
     };
 
-    // Añadir una orden
-    // Añadir una orden
+   
 const addOrder = async () => {
     const numeroOrden = document.getElementById("numeroOrden").value;
     const valorOrden = document.getElementById("valorOrden").value;
 
-    // Validar que los campos no estén vacíos
     if (!numeroOrden || !valorOrden) {
         alert("Por favor, complete todos los campos de la orden.");
         return;
@@ -39,10 +37,9 @@ const addOrder = async () => {
         valor: parseFloat(valorOrden),
     };
 
-    console.log("Enviando JSON:", payload); // Verificar el JSON antes de enviarlo
+    console.log("Enviando JSON:", payload); 
 
     try {
-        // Realizar el POST a la API
         const response = await fetch('http://127.0.0.1:5000/tasks/ordenes', {
             method: "POST",
             headers: {
@@ -53,10 +50,10 @@ const addOrder = async () => {
 
         if (response.ok) {
             alert("Orden añadida correctamente.");
-            document.getElementById("numeroOrden").value = ""; // Limpiar los campos
+            document.getElementById("numeroOrden").value = ""; 
             document.getElementById("valorOrden").value = "";
         } else {
-            const errorData = await response.json(); // Captura detalles del error si existen
+            const errorData = await response.json(); 
             console.error("Error del servidor:", errorData);
             alert(`Error al añadir la orden: ${errorData.message || "Error desconocido"}`);
         }
@@ -104,6 +101,11 @@ const addOrder = async () => {
         }
     };
 
+    const crearReporte = () =>{
+        
+
+    };
+
     useEffect(() => {
         fetchReporte();
     }, [id_reporte]);
@@ -130,6 +132,9 @@ const addOrder = async () => {
                     <input type="number" placeholder="Valor del gasto" id="valorGasto" />
                     <button className="boton-reporte" onClick={addSpent}>Añadir gasto</button>
                 </div>
+            </div>
+            <div className="exportacion-reporte">
+                <button className="boton-crear-reporte" onClick={crearReporte}>Crear y ver reporte</button>
             </div>
         </div>
     );
