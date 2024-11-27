@@ -1,0 +1,96 @@
+/* Contenedor principal */
+.main-resultados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
+/* Encabezado */
+.head-resultados {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.head-resultados h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0;
+}
+
+/* Cuerpo */
+.body-resultados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Información del reporte */
+.info-resultados {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+}
+
+.info-resultados h3 {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0;
+}
+
+.info-resultados h3#totalNeto,
+.info-resultados h3#totalGastos,
+.info-resultados h3#ganancia {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Botón de exportación */
+.boton-exportacion-excel {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #18d40e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.boton-exportacion-excel:hover {
+    background-color: #0d6f08;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .head-resultados h1 {
+        font-size: 2rem;
+    }
+
+    .body-resultados {
+        padding: 15px;
+    }
+
+    .info-resultados h3 {
+        font-size: 1rem;
+    }
+
+    .boton-exportacion-excel {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}

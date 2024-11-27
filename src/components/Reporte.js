@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import './styles/Reporte.css';
 
 const Reporte = () => {
     const { id_reporte } = useParams(); // obtener el id_reporteMensual de la URL
     const [nombreMes, setNombreMes] = useState(""); 
+    const navigate = useNavigate();
 
     // Obtener los detalles del reporte
     const fetchReporte = async () => {
@@ -102,8 +103,7 @@ const addOrder = async () => {
     };
 
     const crearReporte = () =>{
-        
-
+        navigate(`/resultados/${id_reporte}`); 
     };
 
     useEffect(() => {
