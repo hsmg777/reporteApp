@@ -131,6 +131,22 @@
 .boton-crear-reporte:hover {
     background-color: #07ba58;
 }
+
+.boton-regresar{
+    margin-top: 2rem;
+    margin-right: 2rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #1083e0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.boton-regresar:hover{
+    background-color: #0f5893;
+}
 /* --------- Media Queries --------- */
 
 /* Para pantallas medianas (tabletas, menos de 1024px) */
@@ -164,6 +180,10 @@
         font-size: 0.9rem;
     }
     .boton-crear-reporte{
+        padding: 8px 16px; /* Reduce el tamaño del botón */
+        font-size: 0.9rem;
+    }
+    .boton-regresar{
         padding: 8px 16px; /* Reduce el tamaño del botón */
         font-size: 0.9rem;
     }

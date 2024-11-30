@@ -106,6 +106,10 @@ const addOrder = async () => {
         navigate(`/resultados/${id_reporte}`); 
     };
 
+    const regresar = () =>{
+        navigate('/');
+    };
+
     useEffect(() => {
         fetchReporte();
     }, [id_reporte]);
@@ -134,8 +138,10 @@ const addOrder = async () => {
                 </div>
             </div>
             <div className="exportacion-reporte">
+                <button className="boton-regresar" onClick={regresar}>Regresar</button>
                 <button className="boton-crear-reporte" onClick={crearReporte}>Crear y ver reporte</button>
             </div>
+            
         </div>
     );
 };

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import './styles/Resultados.css';
 
 const Resultados = () => {
     const [reporte, setReporte] = useState(null); // Estado para los datos del reporte
     const [loading, setLoading] = useState(false); // Estado para el botón de carga
     const { id_reporte } = useParams(); // Obtiene el ID del reporte desde la URL
+    const navigate = useNavigate();
 
     // Función para consumir la API y obtener los datos del reporte
     const apiReporte = async () => {
@@ -54,6 +55,9 @@ const Resultados = () => {
         }
         
     };
+    const regresar = () =>{
+        navigate(`/reporte/${id_reporte}`);
+    };
 
     // Llama a la API al cargar el componente
     useEffect(() => {
@@ -83,6 +87,7 @@ const Resultados = () => {
                     {loading ? "Exportando..." : "Exportar informe a Excel"}
                 </button>
             </div>
+            <button className="boton-regresar" onClick={regresar}>Regresar</button>
         </div>
     );
 };
