@@ -10,7 +10,7 @@ const Reporte = () => {
     // Obtener los detalles del reporte
     const fetchReporte = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/tasks/reportes/${id_reporte}`);
+            const response = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/${id_reporte}`);
             if (!response.ok) {
                 throw new Error("Error al obtener el reporte");
             }
@@ -41,7 +41,7 @@ const addOrder = async () => {
     console.log("Enviando JSON:", payload); 
 
     try {
-        const response = await fetch('http://127.0.0.1:5000/tasks/ordenes', {
+        const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/ordenes', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -77,7 +77,7 @@ const addOrder = async () => {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/tasks/gastos/', {
+            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/gastos/', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

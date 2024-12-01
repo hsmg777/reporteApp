@@ -11,7 +11,7 @@ const Bienvenida = () => {
     // obtener los reportes desde la API
     const apiReporte = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/tasks/reportes/');
+            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/');
             const data = await response.json();
             setReportes(data); 
         } catch (error) {
@@ -42,7 +42,7 @@ const Bienvenida = () => {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/tasks/reportes/', {
+            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

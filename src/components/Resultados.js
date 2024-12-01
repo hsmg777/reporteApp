@@ -11,7 +11,7 @@ const Resultados = () => {
     // Función para consumir la API y obtener los datos del reporte
     const apiReporte = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/tasks/reportes/${id_reporte}`);
+            const response = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/${id_reporte}`);
             if (!response.ok) {
                 throw new Error("Error al obtener el reporte");
             }
@@ -31,7 +31,7 @@ const Resultados = () => {
 
         setLoading(true); // Activa el estado de carga
         try {
-            const response = await fetch(`http://127.0.0.1:5000/tasks/reportes/exportar/${id_reporte}`, {
+            const response = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/exportar/${id_reporte}`, {
                 method: 'GET',
             });
         
