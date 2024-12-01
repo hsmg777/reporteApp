@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Reemplazar useHistory por useNavigate
+import { useNavigate } from "react-router-dom";
 import './styles/Bienvenida.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHistory } from '@fortawesome/free-solid-svg-icons';
 
 const Bienvenida = () => {
     const [reportes, setReportes] = useState([]); 
-    const [reporteSeleccionado, setReporteSeleccionado] = useState(''); // Estado para el combobox
-    const [nombreMes, setNombreMes] = useState(''); // Estado para crear reporte
+    const [reporteSeleccionado, setReporteSeleccionado] = useState(''); 
+    const [nombreMes, setNombreMes] = useState(''); 
     const navigate = useNavigate(); 
 
-    // obtener los reportes desde la API
     const apiReporte = async () => {
         try {
             const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/');
@@ -53,14 +54,18 @@ const Bienvenida = () => {
             if (response.ok) {
                 const nuevoReporte = await response.json();
                 alert(`Reporte creado con éxito: ${nuevoReporte.nombreMes}`);
-                setReportes([...reportes, nuevoReporte]); // Agregar el nuevo reporte a la lista
-                setNombreMes(''); // Limpiar el campo de entrada
+                setReportes([...reportes, nuevoReporte]); 
+                setNombreMes(''); 
             } else {
                 alert("Error al crear el reporte.");
             }
         } catch (error) {
             console.error("Error al crear el reporte:", error);
         }
+    };
+
+    const recargarReportes = () => {
+        apiReporte();
     };
 
     return (
@@ -71,19 +76,25 @@ const Bienvenida = () => {
             </div>
             <div className="body-Main">
                 <div className="seleccionar-reporte">
+                    <div className="select-boton-reporte">
+                        <select
+                            className="combobox-reporte"
+                            value={reporteSeleccionado}
+                            onChange={handleReporteChange}
+                        >
+                            <option value="" disabled>Seleccione un reporte</option>
+                            {reportes.map((reporte) => (
+                                <option key={reporte.id_reporteMensual} value={reporte.id_reporteMensual}>
+                                    {reporte.nombreMes}
+                                </option>
+                            ))}
+                        </select>
+                        <button className="recargar-boton-reporte" onClick={recargarReportes}>
+                            <FontAwesomeIcon icon={faHistory} />
+                        </button>
+                    </div>
                     <h3>Seleccionar reporte:</h3>
-                    <select
-                        className="combobox-reporte"
-                        value={reporteSeleccionado}
-                        onChange={handleReporteChange}
-                    >
-                        <option value="" disabled>Seleccione un reporte</option>
-                        {reportes.map((reporte) => (
-                            <option key={reporte.id_reporteMensual} value={reporte.id_reporteMensual}>
-                                {reporte.nombreMes}
-                            </option>
-                        ))}
-                    </select>
+                    
                     <button className="boton-crear" onClick={irReporte}>Ir al reporte</button>
                     <p>Seleccione el nombre del mes a reportar 
                     <br /> y dé clic en "Ir al reporte".</p>
