@@ -22,18 +22,24 @@
     margin: 0;
 }
 
+.formato-resultados {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
 /* Cuerpo */
 .body-resultados {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* Cambiado para posicionar elementos horizontalmente */
     gap: 20px;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px;
+    max-width: 800px; /* Ensanchado para acomodar la tabla */
 }
 
 /* Información del reporte */
@@ -41,7 +47,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
+    width: 50%; /* Ajustado para ocupar la mitad del espacio */
     gap: 10px;
 }
 
@@ -56,6 +62,48 @@
 .info-resultados h3#ganancia {
     font-weight: bold;
     color: #000;
+}
+
+/* Tabla de órdenes */
+.ordenes-resultados {
+    flex: 130%; /* Ocupa el espacio restante en el contenedor */
+    max-height: 400px; /* Altura máxima para el cuadro de la tabla */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-resultados-ordenes-container {
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+}
+
+.tabla-resultados-ordenes {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Asegura que la tabla tenga un ancho mínimo */
+}
+
+.tabla-resultados-ordenes th,
+.tabla-resultados-ordenes td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.tabla-resultados-ordenes th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+.tabla-resultados-ordenes tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-resultados-ordenes tr:hover {
+    background-color: #f1f1f1;
 }
 
 /* Botón de exportación */
@@ -75,22 +123,35 @@
     background-color: #0d6f08;
 }
 
+/* Botón de regresar */
+.boton-regresar {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-regresar:hover {
+    background-color: #0056b3;
+}
+
 /* Estilo responsivo */
 @media (max-width: 768px) {
-    .head-resultados h1 {
-        font-size: 2rem;
+    .formato-resultados {
+        flex-direction: column; /* Cambia la disposición a vertical */
     }
 
-    .body-resultados {
-        padding: 15px;
+    .info-resultados {
+        width: 100%; /* Acomoda elementos al 100% del ancho disponible */
     }
 
-    .info-resultados h3 {
-        font-size: 1rem;
-    }
-
-    .boton-exportacion-excel {
-        font-size: 0.9rem;
-        padding: 8px 15px;
+    .ordenes-resultados {
+        width: 100%; /* Acomoda la tabla al 100% del ancho disponible */
+        max-height: 200px; /* Reduce el tamaño en pantallas pequeñas */
     }
 }

@@ -3,22 +3,32 @@ import { useParams, useNavigate } from "react-router-dom";
 import './styles/Resultados.css';
 
 const Resultados = () => {
-    const [reporte, setReporte] = useState(null); // Estado para los datos del reporte
-    const [loading, setLoading] = useState(false); // Estado para el botón de carga
-    const { id_reporte } = useParams(); // Obtiene el ID del reporte desde la URL
+    const [reporte, setReporte] = useState(null); 
+    const [ordenes, setOrdenes] = useState([]); 
+    const [loading, setLoading] = useState(false); 
+    const { id_reporte } = useParams(); 
     const navigate = useNavigate();
 
-    // Función para consumir la API y obtener los datos del reporte
+    // Función para consumir la API y obtener el reporte y las órdenes asociadas
     const apiReporte = async () => {
         try {
-            const response = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/${id_reporte}`);
-            if (!response.ok) {
+            // Obtener datos del reporte
+            const reporteResponse = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/${id_reporte}`);
+            if (!reporteResponse.ok) {
                 throw new Error("Error al obtener el reporte");
             }
-            const data = await response.json();
-            setReporte(data); // Actualiza el estado con los datos del reporte
+            const reporteData = await reporteResponse.json();
+            setReporte(reporteData); // Actualiza el estado con los datos del reporte
+
+            // Obtener órdenes asociadas al reporte
+            const ordenesResponse = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/ordenes/reporte/${id_reporte}`);
+            if (!ordenesResponse.ok) {
+                throw new Error("Error al obtener las órdenes");
+            }
+            const ordenesData = await ordenesResponse.json();
+            setOrdenes(ordenesData); // Actualiza el estado con las órdenes
         } catch (error) {
-            console.error("Error al cargar el reporte:", error);
+            console.error("Error al cargar los datos:", error);
         }
     };
 
@@ -52,10 +62,12 @@ const Resultados = () => {
         } catch (error) {
             console.error("Error al exportar a Excel:", error);
             alert(`Error al exportar el informe: ${error.message}`);
+        } finally {
+            setLoading(false); // Desactiva el estado de carga
         }
-        
     };
-    const regresar = () =>{
+
+    const regresar = () => {
         navigate(`/reporte/${id_reporte}`);
     };
 
@@ -70,22 +82,56 @@ const Resultados = () => {
                 <h1> REPORTE MES: </h1> 
                 <h1 id="nombreMes">{reporte ? reporte.nombreMes : "Cargando..."}</h1>
             </div>
-            <div className="body-resultados">
-                <div className="info-resultados">
-                    <h3>Total neto:</h3>
-                    <h3 id="totalNeto">{reporte ? reporte.totalNeto.toFixed(2) : "Cargando..."}</h3>
-                    <h3>Total gastos:</h3>
-                    <h3 id="totalGastos">{reporte ? reporte.totalGastos.toFixed(2) : "Cargando..."}</h3>
-                    <h3>Ganancia Total:</h3>
-                    <h3 id="ganancia">{reporte ? reporte.ganancia.toFixed(2) : "Cargando..."}</h3>
+            <div className="formato-resultados">
+                <div className="body-resultados">
+                    <div className="info-resultados">
+                        <h3>Total neto:</h3>
+                        <h3 id="totalNeto">{reporte ? reporte.totalNeto.toFixed(2) : "Cargando..."}</h3>
+                        <h3>Total gastos:</h3>
+                        <h3 id="totalGastos">{reporte ? reporte.totalGastos.toFixed(2) : "Cargando..."}</h3>
+                        <h3>Ganancia Total:</h3>
+                        <h3 id="ganancia">{reporte ? reporte.ganancia.toFixed(2) : "Cargando..."}</h3>
+                    </div>
+                    <button 
+                        className="boton-exportacion-excel" 
+                        onClick={exportarExcel}
+                        disabled={loading} // Desactiva el botón mientras se está exportando
+                    >
+                        {loading ? "Exportando..." : "Exportar informe a Excel"}
+                    </button>
                 </div>
-                <button 
-                    className="boton-exportacion-excel" 
-                    onClick={exportarExcel}
-                    disabled={loading} // Desactiva el botón mientras se está exportando
-                >
-                    {loading ? "Exportando..." : "Exportar informe a Excel"}
-                </button>
+                <div className="ordenes-resultados">
+                    <h3>Órdenes Asociadas:</h3>
+                    <div className="tabla-resultados-ordenes-container">
+                        <table className="tabla-resultados-ordenes">
+                            <thead>
+                                <tr>
+                                    <th>ID Orden</th>
+                                    <th>Número de Orden</th>
+                                    <th>Valor</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ordenes.length > 0 ? (
+                                    ordenes.map((orden) => (
+                                        <tr key={orden.id_orden}>
+                                            <td>{orden.id_orden}</td>
+                                            <td>{orden.numeroOrden}</td>
+                                            <td>{orden.valor.toFixed(2)}</td>
+                                            <td>{orden.fecha}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="4">No hay órdenes asociadas</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
             <button className="boton-regresar" onClick={regresar}>Regresar</button>
         </div>
