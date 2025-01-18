@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import './styles/Reporte.css';
 
 const Reporte = () => {
@@ -21,56 +21,94 @@ const Reporte = () => {
         }
     };
 
-   
-const addOrder = async () => {
-    const numeroOrden = document.getElementById("numeroOrden").value;
-    const valorOrden = document.getElementById("valorOrden").value;
+    const addOrder = async () => {
+        const numeroOrden = document.getElementById("numeroOrden").value;
+        const valorOrden = document.getElementById("valorOrden").value;
 
-    if (!numeroOrden || !valorOrden) {
-        alert("Por favor, complete todos los campos de la orden.");
-        return;
-    }
+        if (!numeroOrden || !valorOrden) {
+            alert("Por favor, complete todos los campos de la orden.");
+            return;
+        }
 
-    // Crear el payload
-    const payload = {
-        id_reporteMensual: parseInt(id_reporte),
-        numeroOrden: parseInt(numeroOrden),
-        valor: parseFloat(valorOrden),
+        // Crear el payload
+        const payload = {
+            id_reporteMensual: parseInt(id_reporte),
+            numeroOrden: parseInt(numeroOrden),
+            valor: parseFloat(valorOrden),
+        };
+
+        console.log("Enviando JSON:", payload); 
+
+        try {
+            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/ordenes', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                alert("Orden añadida correctamente.");
+                document.getElementById("numeroOrden").value = ""; 
+                document.getElementById("valorOrden").value = "";
+            } else {
+                const errorData = await response.json(); 
+                console.error("Error del servidor:", errorData);
+                alert(`Error al añadir la orden: ${errorData.message || "Error desconocido"}`);
+            }
+        } catch (error) {
+            console.error("Error al añadir la orden:", error);
+            alert("Error al añadir la orden.");
+        }
     };
 
-    console.log("Enviando JSON:", payload); 
+    const addFactura = async () => {
+        const numeroFactura = document.getElementById("numeroFactura").value;
+        const valorFactura = document.getElementById("valorFactura").value;
 
-    try {
-        const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/ordenes', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        });
-
-        if (response.ok) {
-            alert("Orden añadida correctamente.");
-            document.getElementById("numeroOrden").value = ""; 
-            document.getElementById("valorOrden").value = "";
-        } else {
-            const errorData = await response.json(); 
-            console.error("Error del servidor:", errorData);
-            alert(`Error al añadir la orden: ${errorData.message || "Error desconocido"}`);
+        if (!numeroFactura || !valorFactura) {
+            alert("Por favor, complete todos los campos de la factura.");
+            return;
         }
-    } catch (error) {
-        console.error("Error al añadir la orden:", error);
-        alert("Error al añadir la orden.");
-    }
-};
 
-    
-    // Añadir un gasto
+        // Crear el payload
+        const payload = {
+            id_reporteMensual: parseInt(id_reporte),
+            numeroFactura: parseInt(numeroFactura),
+            valor: parseFloat(valorFactura),
+        };
+
+        console.log("Enviando JSON para factura:", payload);
+
+        try {
+            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/facturas', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                alert("Factura añadida correctamente.");
+                document.getElementById("numeroFactura").value = ""; 
+                document.getElementById("valorFactura").value = "";
+            } else {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
+                alert(`Error al añadir la factura: ${errorData.message || "Error desconocido"}`);
+            }
+        } catch (error) {
+            console.error("Error al añadir la factura:", error);
+            alert("Error al añadir la factura.");
+        }
+    };
+
     const addSpent = async () => {
         const nombreGasto = document.getElementById("nombreGasto").value;
         const valorGasto = document.getElementById("valorGasto").value;
 
-        
         if (!nombreGasto || !valorGasto) {
             alert("Por favor, complete todos los campos del gasto.");
             return;
@@ -102,11 +140,11 @@ const addOrder = async () => {
         }
     };
 
-    const crearReporte = () =>{
+    const crearReporte = () => {
         navigate(`/resultados/${id_reporte}`); 
     };
 
-    const regresar = () =>{
+    const regresar = () => {
         navigate('/');
     };
 
@@ -128,6 +166,14 @@ const addOrder = async () => {
                     <input type="text" placeholder="Valor de la orden" id="valorOrden" />
                     <button className="boton-reporte" onClick={addOrder}> Añadir orden</button>
                 </div>
+                <div className="ordenes-reporte">
+                    <h2>Facturas</h2>
+                    <p>Ingrese el número de Factura:</p>
+                    <input type="text" placeholder="Número de factura" id="numeroFactura" />
+                    <p>Ingrese el valor de la Factura:</p>
+                    <input type="text" placeholder="Valor de la factura" id="valorFactura" />
+                    <button className="boton-reporte" onClick={addFactura}> Añadir factura</button>
+                </div>
                 <div className="gastos-reporte">
                     <h2>Gastos</h2>
                     <p>Ingrese el nombre del gasto:</p>
@@ -141,7 +187,6 @@ const addOrder = async () => {
                 <button className="boton-regresar" onClick={regresar}>Regresar</button>
                 <button className="boton-crear-reporte" onClick={crearReporte}>Crear y ver reporte</button>
             </div>
-            
         </div>
     );
 };

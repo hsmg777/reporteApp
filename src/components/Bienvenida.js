@@ -64,8 +64,15 @@ const Bienvenida = () => {
         }
     };
 
-    const recargarReportes = () => {
-        apiReporte();
+    const recargarReportes = async () => {
+        try {
+            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/');
+            const data = await response.json();
+            setReportes(data); 
+            alert("Reportes recargados correctamente");
+        } catch (error) {
+            console.error("Error al obtener los reportes:", error);
+        }
     };
 
     return (
