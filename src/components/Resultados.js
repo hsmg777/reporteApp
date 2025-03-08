@@ -2,31 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import './styles/Resultados.css';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Resultados = () => {
-    const [reporte, setReporte] = useState(null); 
-    const [ordenes, setOrdenes] = useState([]); 
-    const [loading, setLoading] = useState(false); 
-    const { id_reporte } = useParams(); 
+    const [reporte, setReporte] = useState(null);
+    const [ordenes, setOrdenes] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const { id_reporte } = useParams();
     const navigate = useNavigate();
 
     // Función para consumir la API y obtener el reporte y las órdenes asociadas
     const apiReporte = async () => {
         try {
-            // Obtener datos del reporte
-            const reporteResponse = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/${id_reporte}`);
+            const reporteResponse = await fetch(`${API_URL}/reportes/${id_reporte}`);
             if (!reporteResponse.ok) {
                 throw new Error("Error al obtener el reporte");
             }
             const reporteData = await reporteResponse.json();
-            setReporte(reporteData); // Actualiza el estado con los datos del reporte
+            setReporte(reporteData);
 
-            // Obtener órdenes asociadas al reporte
-            const ordenesResponse = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/ordenes/reporte/${id_reporte}`);
+            const ordenesResponse = await fetch(`${API_URL}/ordenes/reporte/${id_reporte}`);
             if (!ordenesResponse.ok) {
                 throw new Error("Error al obtener las órdenes");
             }
             const ordenesData = await ordenesResponse.json();
-            setOrdenes(ordenesData); // Actualiza el estado con las órdenes
+            setOrdenes(ordenesData);
         } catch (error) {
             console.error("Error al cargar los datos:", error);
         }
@@ -39,22 +39,20 @@ const Resultados = () => {
             return;
         }
 
-        setLoading(true); // Activa el estado de carga
+        setLoading(true);
         try {
-            const response = await fetch(`https://fastcleaningapp-latest.onrender.com/tasks/reportes/exportar/${id_reporte}`, {
-                method: 'GET',
-            });
-        
+            const response = await fetch(`${API_URL}/reportes/exportar/${id_reporte}`, { method: 'GET' });
+
             if (!response.ok) {
-                const errorDetails = await response.json(); // Intenta obtener el mensaje de error
+                const errorDetails = await response.json();
                 throw new Error(errorDetails.message || "Error desconocido al exportar");
             }
-        
+
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Reporte_${reporte?.nombreMes || "informe"}.xlsx`; // Nombre del archivo
+            a.download = `Reporte_${reporte?.nombreMes || "informe"}.xlsx`;
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -63,7 +61,7 @@ const Resultados = () => {
             console.error("Error al exportar a Excel:", error);
             alert(`Error al exportar el informe: ${error.message}`);
         } finally {
-            setLoading(false); // Desactiva el estado de carga
+            setLoading(false);
         }
     };
 
@@ -71,7 +69,6 @@ const Resultados = () => {
         navigate(`/reporte/${id_reporte}`);
     };
 
-    // Llama a la API al cargar el componente
     useEffect(() => {
         apiReporte();
     }, [id_reporte]);
@@ -79,7 +76,7 @@ const Resultados = () => {
     return (
         <div className="main-resultados">
             <div className="head-resultados">
-                <h1> REPORTE MES: </h1> 
+                <h1> REPORTE MES: </h1>
                 <h1 id="nombreMes">{reporte ? reporte.nombreMes : "Cargando..."}</h1>
             </div>
             <div className="formato-resultados">
@@ -95,7 +92,7 @@ const Resultados = () => {
                     <button 
                         className="boton-exportacion-excel" 
                         onClick={exportarExcel}
-                        disabled={loading} // Desactiva el botón mientras se está exportando
+                        disabled={loading}
                     >
                         {loading ? "Exportando..." : "Exportar informe a Excel"}
                     </button>
@@ -131,7 +128,6 @@ const Resultados = () => {
                         </table>
                     </div>
                 </div>
-
             </div>
             <button className="boton-regresar" onClick={regresar}>Regresar</button>
         </div>

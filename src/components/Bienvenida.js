@@ -4,6 +4,8 @@ import './styles/Bienvenida.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHistory } from '@fortawesome/free-solid-svg-icons';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Bienvenida = () => {
     const [reportes, setReportes] = useState([]); 
     const [reporteSeleccionado, setReporteSeleccionado] = useState(''); 
@@ -12,9 +14,12 @@ const Bienvenida = () => {
 
     const apiReporte = async () => {
         try {
-            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/');
+            const response = await fetch(`${API_URL}/reportes/`);
+            if (!response.ok) {
+                throw new Error("Error al obtener los reportes");
+            }
             const data = await response.json();
-            setReportes(data); 
+            setReportes(data);
         } catch (error) {
             console.error("Error al obtener los reportes:", error);
         }
@@ -25,12 +30,12 @@ const Bienvenida = () => {
     }, []);
 
     const handleReporteChange = (event) => {
-        setReporteSeleccionado(event.target.value); 
+        setReporteSeleccionado(event.target.value);
     };
 
     const irReporte = () => {
         if (reporteSeleccionado) {
-            navigate(`/reporte/${reporteSeleccionado}`); 
+            navigate(`/reporte/${reporteSeleccionado}`);
         } else {
             alert("Por favor, seleccione un reporte.");
         }
@@ -43,11 +48,9 @@ const Bienvenida = () => {
         }
 
         try {
-            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/', {
+            const response = await fetch(`${API_URL}/reportes/`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nombreMes }),
             });
 
@@ -55,7 +58,7 @@ const Bienvenida = () => {
                 const nuevoReporte = await response.json();
                 alert(`Reporte creado con éxito: ${nuevoReporte.nombreMes}`);
                 setReportes([...reportes, nuevoReporte]); 
-                setNombreMes(''); 
+                setNombreMes('');
             } else {
                 alert("Error al crear el reporte.");
             }
@@ -66,12 +69,15 @@ const Bienvenida = () => {
 
     const recargarReportes = async () => {
         try {
-            const response = await fetch('https://fastcleaningapp-latest.onrender.com/tasks/reportes/');
+            const response = await fetch(`${API_URL}/reportes/`);
+            if (!response.ok) {
+                throw new Error("Error al recargar los reportes");
+            }
             const data = await response.json();
-            setReportes(data); 
+            setReportes(data);
             alert("Reportes recargados correctamente");
         } catch (error) {
-            console.error("Error al obtener los reportes:", error);
+            console.error("Error al recargar los reportes:", error);
         }
     };
 
@@ -101,7 +107,6 @@ const Bienvenida = () => {
                         </button>
                     </div>
                     <h3>Seleccionar reporte:</h3>
-                    
                     <button className="boton-crear" onClick={irReporte}>Ir al reporte</button>
                     <p>Seleccione el nombre del mes a reportar 
                     <br /> y dé clic en "Ir al reporte".</p>
